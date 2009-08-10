@@ -1,0 +1,3 @@
+	10 Aug 2009; Roman Zimmermann <mereandor@gmail.com> ffmpeg-0.5-r1.ebuild:
+	Changed the ebuild to not use "--enable-static" which is set by default and
+	to use EXTRA_ECONF instead of EXTRA_FFMPEG_CONF
