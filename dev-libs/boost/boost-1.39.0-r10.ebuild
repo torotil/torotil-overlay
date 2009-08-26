@@ -268,24 +268,24 @@ src_install () {
 	# The threading libs obviously always gets the "-mt" (multithreading) tag
 	# some packages seem to have a problem with it. Creating symlinks...
 	for lib in libboost_thread-mt-${MAJOR_PV}{.a,$(get_libname)} ; do
-		dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
+		test -e "${lib}" && dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
 	done
 
 	# The same goes for the mpi libs
 	if use mpi ; then
 		for lib in libboost_mpi-mt-${MAJOR_PV}{.a,$(get_libname)} ; do
-			dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
+			test -e "${lib}" && dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
 		done
 	fi
 
 	if use debug ; then
 		for lib in libboost_thread-mt-${MAJOR_PV}-debug{.a,$(get_libname)} ; do
-			dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
+			test -e "${lib}" && dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
 		done
 
 		if use mpi ; then
 			for lib in libboost_mpi-mt-${MAJOR_PV}-debug{.a,$(get_libname)} ; do
-				dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
+				test -e "${lib}" && dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
 			done
 		fi
 	fi
@@ -296,8 +296,10 @@ src_install () {
 
 	_add_line "libs=\"" default
 	for f in $(ls -1 *{.a,$(get_libname)} | grep -v debug) ; do
-		dosym ../${f} /usr/$(get_libdir)/boost-${MAJOR_PV}/${f/-${MAJOR_PV}}
-		_add_line "/usr/$(get_libdir)/${f}" default
+		if [ -e  ../{$f} ]; then
+		  dosym ../${f} /usr/$(get_libdir)/boost-${MAJOR_PV}/${f/-${MAJOR_PV}}
+		  _add_line "/usr/$(get_libdir)/${f}" default
+		fi
 	done
 	_add_line "\"" default
 
@@ -305,8 +307,10 @@ src_install () {
 		_add_line "libs=\"" debug
 		dodir /usr/$(get_libdir)/boost-${MAJOR_PV}-debug
 		for f in $(ls -1 *{.a,$(get_libname)} | grep debug) ; do
+		  if [ -e ../${f} ]; then
 			dosym ../${f} /usr/$(get_libdir)/boost-${MAJOR_PV}-debug/${f/-${MAJOR_PV}-debug}
 			_add_line "/usr/$(get_libdir)/${f}" debug
+		  fi
 		done
 		_add_line "\"" debug
 
