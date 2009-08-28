@@ -151,8 +151,13 @@ src_configure() {
 	# If they contain an unknown CPU it will not hurt since ffmpeg's configure
 	# will just ignore it.
 	for i in $(get-flag march) $(get-flag mcpu) $(get-flag mtune) ; do
-		myconf="${myconf} --cpu=$i"
-		break
+		if [[ "$i" == "native" ]]; then
+			i=`echo "int main() {return 0;}" | gcc ${CFLAGS} -x c -S -Q -v - 2>&1 | egrep -m 1 -o "\-march=.*" | cut -f 1 -d \ | cut -f 2 -d \=`
+		fi
+		if [[ "$i" != "" ]]; then
+			myconf="${myconf} --cpu=$i"
+			break
+		fi
 	done
 
 	# video hooking support. replaced by libavfilter, probably needs to be
