@@ -1,0 +1,37 @@
+--- Makefile.orig	2009-08-29 13:27:11.000000000 +0200
++++ Makefile	2009-08-29 13:28:08.000000000 +0200
+@@ -68,7 +68,7 @@
+ 
+ .SUFFIXES: .$(OBJECT_EXTENSION) .$(ASSEMBLY_EXTENSION) .c
+ 
+-all: $(STATIC_LIB) $(SHARED_LIB)
++all: $(SHARED_LIB)
+ 	@echo
+ 	@echo "---------------------------------------------------------------"
+ 	@echo " Xvid has been successfully built."
+@@ -136,13 +136,13 @@
+ # Installation
+ #-----------------------------------------------------------------------------
+ 
+-install: $(BUILD_DIR)/$(STATIC_LIB) $(BUILD_DIR)/$(SHARED_LIB)
++install: $(BUILD_DIR)/$(SHARED_LIB)
+ 	@echo "  D: $(libdir)"
+ 	@$(INSTALL) -d $(DESTDIR)$(libdir)
+ 	@echo "  I: $(libdir)/$(SHARED_LIB)"
+ 	@$(INSTALL) -m 644 $(BUILD_DIR)/$(SHARED_LIB) $(DESTDIR)$(libdir)/$(SHARED_LIB)
+-	@echo "  I: $(libdir)/$(STATIC_LIB)"
+-	@$(INSTALL) -m 644 $(BUILD_DIR)/$(STATIC_LIB) $(DESTDIR)$(libdir)/$(STATIC_LIB)
++#	@echo "  I: $(libdir)/$(STATIC_LIB)"
++#	@$(INSTALL) -m 644 $(BUILD_DIR)/$(STATIC_LIB) $(DESTDIR)$(libdir)/$(STATIC_LIB)
+ 	@echo "  D: $(includedir)"
+ 	@$(INSTALL) -d $(DESTDIR)$(includedir)
+ 	@echo "  I: $(includedir)/xvid.h"
+@@ -202,7 +202,7 @@
+ 	@echo "---------------------------------------------------------------"
+ 	@echo
+ 	@echo Shared library: $(SHARED_LIB)
+-	@echo Static library: $(STATIC_LIB)
++#	@echo Static library: $(STATIC_LIB)
+ 	@echo
+ 
+ list-install-path:
