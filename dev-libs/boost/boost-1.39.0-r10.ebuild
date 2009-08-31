@@ -153,9 +153,9 @@ __EOF__
 
 
 	LINKING="shared,static"
-    if use nostatic ; then
-      LINKING="shared"
-    fi
+	if use nostatic ; then
+		LINKING="shared"
+	fi
 
 }
 
@@ -296,10 +296,8 @@ src_install () {
 
 	_add_line "libs=\"" default
 	for f in $(ls -1 *{.a,$(get_libname)} | grep -v debug) ; do
-		if [ -e  ../{$f} ]; then
-		  dosym ../${f} /usr/$(get_libdir)/boost-${MAJOR_PV}/${f/-${MAJOR_PV}}
-		  _add_line "/usr/$(get_libdir)/${f}" default
-		fi
+		dosym ../${f} /usr/$(get_libdir)/boost-${MAJOR_PV}/${f/-${MAJOR_PV}}
+		_add_line "/usr/$(get_libdir)/${f}" default
 	done
 	_add_line "\"" default
 
@@ -307,10 +305,8 @@ src_install () {
 		_add_line "libs=\"" debug
 		dodir /usr/$(get_libdir)/boost-${MAJOR_PV}-debug
 		for f in $(ls -1 *{.a,$(get_libname)} | grep debug) ; do
-		  if [ -e ../${f} ]; then
 			dosym ../${f} /usr/$(get_libdir)/boost-${MAJOR_PV}-debug/${f/-${MAJOR_PV}-debug}
 			_add_line "/usr/$(get_libdir)/${f}" debug
-		  fi
 		done
 		_add_line "\"" debug
 
