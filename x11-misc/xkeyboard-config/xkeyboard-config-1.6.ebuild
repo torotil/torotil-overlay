@@ -8,7 +8,7 @@ DESCRIPTION="X keyboard configuration database"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd"
 HOMEPAGE="http://www.freedesktop.org/wiki/Software/XKeyboardConfig"
 SRC_URI="http://xlibs.freedesktop.org/xkbdesc/${P}.tar.bz2
-http://neo-layout.org/xkb.tgz"
+http://mereandor.paebbels.com/distfiles/neo-linux-2070.tar.bz2"
 
 LICENSE="xkeyboard-config"
 SLOT="0"
@@ -35,6 +35,6 @@ src_compile() {
 src_install() {
 	emake DESTDIR="${D}" install || die "install failed"
 	einfo "Copying neo-layout"
-	cp -R "${WORKDIR}/xkb" "${D}/usr/share/X11/"
+	cp -R "${WORKDIR}/neo-linux/X/" "${D}/usr/share/X11/xkb/"
 	dodoc ChangeLog NEWS README
 }
