@@ -1,0 +1,8 @@
+CFLAGS="${CFLAGS} -g"
+
+# do not compile openoffice with debugging symbols
+if [[ "${CATEGORY}/${PN}" == "app-office/openoffice" ]] ; then
+	CFLAGS=${CFLAGS/ -g}
+fi
+
+

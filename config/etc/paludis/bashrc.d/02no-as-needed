@@ -1,0 +1,6 @@
+#if [[ "${CATEGORY}/${P}" == "sys-libs/readline-6.0_p3" ]] ; then
+#	echo "deactivating as needed"
+#	LDFLAGS=""
+#fi
+
+

@@ -1,0 +1,19 @@
+PATH="/usr/lib/ccache/bin/:${PATH}"
+CCACHE_DIR="/var/tmp/ccache"
+SANDBOX_WRITE="${SANDBOX_WRITE}:${CCACHE_DIR}"
+
+CHOST="x86_64-pc-linux-gnu"
+LDFLAGS="-Wl,--as-needed"
+MAKEOPTS="-j2"
+CFLAGS="-O2 -pipe -march=native"
+
+EXTRA_ECONF="--disable-static"
+
+#@TODO: make debugging symbols optional
+
+r="/etc/paludis"
+source "$r/bashrc.d/01cflags-debug"
+source "$r/bashrc.d/02no-as-needed"
+source "$r/bashrc.d/03build-static"
+
+CXXFLAGS="${CFLAGS}"

@@ -1,0 +1,10 @@
+for p in "sys-devel/gdb" "sys-libs/readline" "x11-libs/libXxf86vm";
+do
+	#echo trying "${CATEGORY}/${PN}" == "${p}"
+	if [[ "${CATEGORY}/${PN}" == "${p}" ]] ; then
+		echo "allowing static"
+		EXTRA_ECONF=""
+	fi
+done
+
+
