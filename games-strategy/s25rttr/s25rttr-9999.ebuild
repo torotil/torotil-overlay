@@ -4,7 +4,7 @@
 EAPI=2
 
 if [[ ${PV} = 9999* ]]; then
-	EBZR_REPO_URI="lp:~mereandor/s25rttr/cmake-fixes"
+	EBZR_REPO_URI="lp:~mereandor/s25rttr/cmake"
 	BZR="bzr"
 fi
 
@@ -15,12 +15,13 @@ HOMEPAGE="http://www.siedler25.org/"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="cdinstall"
 RDEPEND=">=media-libs/libsdl-1.2
 	>=media-libs/sdl-mixer-1.2
 "
 DEPEND="${RDEPEND} >=dev-util/cmake-2.6"
-RDEPEND="${RDEPEND} =games-strategy/s25rttr-data-1"
+RDEPEND="${RDEPEND}
+	cdinstall? ( =games-strategy/s25rttr-data-1 )"
 
 SOURCE=${S}
 S=${S}/build-dir

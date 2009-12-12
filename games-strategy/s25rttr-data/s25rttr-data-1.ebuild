@@ -7,7 +7,7 @@ DESCRIPTION="The settlers II - data files"
 HOMEPAGE=""
 SRC_URI=""
 
-LICENSE="DOOM3"
+LICENSE=""
 SLOT="0"
 KEYWORDS="-* amd64 x86"
 IUSE=""
@@ -20,7 +20,7 @@ RDEPEND="games-strategy/s25rttr"
 
 S=${WORKDIR}
 
-GAMES_CHECK_LICENSE="yes"
+GAMES_CHECK_LICENSE="no"
 dir=${GAMES_DATADIR}/s25rttr/S2
 Ddir=${D}/${dir}
 
