@@ -18,7 +18,7 @@ src_compile() {
 }
 
 src_install() {
-	insinto /lib/firmware
+	insinto /$(get_libdir)/firmware
 	doins "${S}/${PN/-ucode}-${SLOT}.ucode"
 
 	dodoc README* || die "dodoc failed"
