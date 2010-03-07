@@ -9,18 +9,13 @@ SRC_URI="http://intellinuxwireless.org/iwlwifi/downloads/${P}.tgz"
 
 LICENSE="ipw3945"
 SLOT="3"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
-
-DEPEND="|| ( >=sys-fs/udev-096 >=sys-apps/hotplug-20040923 )"
-
-src_compile() {
-	true;
-}
 
 src_install() {
 	insinto /$(get_libdir)/firmware
-	doins "${S}/${PN/-ucode}-${SLOT}.ucode"
+	doins "${S}/${PN/-ucode}-${SLOT}.ucode" || die "doins failed"
 
 	dodoc README* || die "dodoc failed"
 }
+
