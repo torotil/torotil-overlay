@@ -1,6 +1,7 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-wireless/iwl5000-ucode/iwl5000-ucode-8.24.2.12.ebuild,v 1.4 2010/01/09 11:18:39 hanno Exp $
+
+inherit multilib
 
 DESCRIPTION="Intel (R) Wireless WiFi Link 1000 ucode"
 HOMEPAGE="http://intellinuxwireless.org/?p=iwlwifi"
