@@ -1,0 +1,174 @@
+diff -urN megaglest-source-3.3.1_old/glest_game/ai/ai_interface.h megaglest-source-3.3.1/glest_game/ai/ai_interface.h
+--- megaglest-source-3.3.1_old/glest_game/ai/ai_interface.h	2010-03-28 11:48:17.000000000 +0200
++++ megaglest-source-3.3.1/glest_game/ai/ai_interface.h	2010-03-28 11:48:34.000000000 +0200
+@@ -85,7 +85,11 @@
+ 	bool isFreeCells(const Vec2i &pos, int size, Field field);
+ 
+ private:
+-	string getLogFilename() const	{return "ai"+intToStr(factionIndex)+".log";}
++	string getLogFilename() const	{
++	  string logfn=getenv("HOME");
++	  logfn+="/.glest/ai"+intToStr(factionIndex)+".log";
++	  return logfn;
++	}
+ };
+ 
+ }}//end namespace
+diff -urN megaglest-source-3.3.1_old/glest_game/ai/ai_rule.cpp megaglest-source-3.3.1/glest_game/ai/ai_rule.cpp
+--- megaglest-source-3.3.1_old/glest_game/ai/ai_rule.cpp	2010-03-28 11:48:17.000000000 +0200
++++ megaglest-source-3.3.1/glest_game/ai/ai_rule.cpp	2010-03-28 11:48:34.000000000 +0200
+@@ -18,6 +18,8 @@
+ #include "unit.h"
+ #include "leak_dumper.h"
+ 
++#include <limits.h>
++
+ using Shared::Graphics::Vec2i;
+ 
+ namespace Glest{ namespace Game{
+diff -urN megaglest-source-3.3.1_old/glest_game/game/game.cpp megaglest-source-3.3.1/glest_game/game/game.cpp
+--- megaglest-source-3.3.1_old/glest_game/game/game.cpp	2010-03-28 11:48:17.000000000 +0200
++++ megaglest-source-3.3.1/glest_game/game/game.cpp	2010-03-28 11:50:17.000000000 +0200
+@@ -464,8 +464,8 @@
+ 		}
+ 		else if(key=='E'){
+ 			for(int i=0; i<100; ++i){
+-				string path= "screens/screen" + intToStr(i) + ".tga";
+-
++				string path=getenv("HOME");
++				path+="/.glest/screens/screen" + intToStr(i) + ".tga";
+ 				FILE *f= fopen(path.c_str(), "rb");
+ 				if(f==NULL){
+ 					Renderer::getInstance().saveScreen(path);
+diff -urN megaglest-source-3.3.1_old/glest_game/game/game.cpp.rej megaglest-source-3.3.1/glest_game/game/game.cpp.rej
+--- megaglest-source-3.3.1_old/glest_game/game/game.cpp.rej	1970-01-01 01:00:00.000000000 +0100
++++ megaglest-source-3.3.1/glest_game/game/game.cpp.rej	2010-03-28 11:48:34.000000000 +0200
+@@ -0,0 +1,18 @@
++***************
++*** 443,449 ****
++  		}
++  		else if(key=='E'){
++  			for(int i=0; i<100; ++i){
++- 				string path= "screens/screen" + intToStr(i) + ".tga";
++  				
++  				FILE *f= fopen(path.c_str(), "rb");
++  				if(f==NULL){
++--- 443,450 ----
++  		}
++  		else if(key=='E'){
++  			for(int i=0; i<100; ++i){
+++ 				string path=getenv("HOME");
+++ 				path+="/.glest/screens/screen" + intToStr(i) + ".tga";
++  				
++  				FILE *f= fopen(path.c_str(), "rb");
++  				if(f==NULL){
+diff -urN megaglest-source-3.3.1_old/glest_game/main/main.cpp megaglest-source-3.3.1/glest_game/main/main.cpp
+--- megaglest-source-3.3.1_old/glest_game/main/main.cpp	2010-03-28 11:48:17.000000000 +0200
++++ megaglest-source-3.3.1/glest_game/main/main.cpp	2010-03-28 11:48:34.000000000 +0200
+@@ -151,6 +151,17 @@
+ // =====================================================
+ 
+ int glestMain(int argc, char** argv){
++	if (!getenv("HOME"))
++		throw runtime_error("HOME external variable is not set");
++
++	char path[PATH_MAX];
++	snprintf(path, PATH_MAX, "%s/.glest", getenv("HOME"));
++	mkdir(path, 0750);
++
++	snprintf(path, PATH_MAX, "%s/.glest/screens", getenv("HOME"));
++	mkdir(path, 0750);
++
++	chdir("@GENTOO_DATADIR@");
+ 
+ 	MainWindow *mainWindow= NULL;
+ 	Program *program= NULL;
+diff -urN megaglest-source-3.3.1_old/glest_game/main/program.cpp megaglest-source-3.3.1/glest_game/main/program.cpp
+--- megaglest-source-3.3.1_old/glest_game/main/program.cpp	2010-03-28 11:48:17.000000000 +0200
++++ megaglest-source-3.3.1/glest_game/main/program.cpp	2010-03-28 11:48:34.000000000 +0200
+@@ -276,9 +276,11 @@
+ 	updateTimer.init(GameConstants::updateFps, maxTimes);
+ 	updateCameraTimer.init(GameConstants::cameraFps, maxTimes);
+ 
+-    //log start
+-	Logger &logger= Logger::getInstance();
+-	logger.setFile("glest.log");
++  //log start
++ 	char path[PATH_MAX];
++	snprintf(path, PATH_MAX, "%s/.glest/glest.log", getenv("HOME"));
++ 	Logger &logger= Logger::getInstance();
++	logger.setFile(path);
+ 	logger.clear();
+ 
+ 	//lang
+diff -urN megaglest-source-3.3.1_old/shared_lib/sources/util/leak_dumper.cpp megaglest-source-3.3.1/shared_lib/sources/util/leak_dumper.cpp
+--- megaglest-source-3.3.1_old/shared_lib/sources/util/leak_dumper.cpp	2010-03-28 11:48:17.000000000 +0200
++++ megaglest-source-3.3.1/shared_lib/sources/util/leak_dumper.cpp	2010-03-28 11:48:34.000000000 +0200
+@@ -52,7 +52,9 @@
+ }
+ 
+ AllocRegistry::~AllocRegistry(){
+-	dump("leak_dump.log");
++	char path[PATH_MAX];
++	snprintf(path, PATH_MAX, "%s/.glest/leak_dump.log", getenv("HOME"));
++	dump(path);
+ }
+ 
+ void AllocRegistry::allocate(AllocInfo info){
+diff -urN megaglest-source-3.3.1_old/shared_lib/sources/util/profiler.cpp megaglest-source-3.3.1/shared_lib/sources/util/profiler.cpp
+--- megaglest-source-3.3.1_old/shared_lib/sources/util/profiler.cpp	2010-03-28 11:48:17.000000000 +0200
++++ megaglest-source-3.3.1/shared_lib/sources/util/profiler.cpp	2010-03-28 11:48:35.000000000 +0200
+@@ -71,9 +71,11 @@
+ Profiler::~Profiler(){
+ 	rootSection->stop();
+ 
+-	FILE *f= fopen("profiler.log", "w");
++	char path[PATH_MAX];
++	snprintf(path, PATH_MAX, "%s/.glest/profiler.log", getenv("HOME"));
++	FILE *f= fopen(path, "w");
+ 	if(f==NULL)
+-		throw runtime_error("Can not open file: profiler.log");
++		throw runtime_error("Can not open file: %s",path);
+ 
+ 	fprintf(f, "Profiler Results\n\n");
+ 
+diff -urN megaglest-source-3.3.1_old/shared_lib/sources/util/properties.cpp megaglest-source-3.3.1/shared_lib/sources/util/properties.cpp
+--- megaglest-source-3.3.1_old/shared_lib/sources/util/properties.cpp	2010-03-28 11:48:17.000000000 +0200
++++ megaglest-source-3.3.1/shared_lib/sources/util/properties.cpp	2010-03-28 11:48:35.000000000 +0200
+@@ -15,6 +15,9 @@
+ #include <stdexcept>
+ #include <cstring>
+ 
++#include <limits.h>
++#include <stdlib.h>
++
+ #include "conversion.h"
+ #include "leak_dumper.h"
+ 
+@@ -35,9 +38,13 @@
+ 
+ 	this->path= path;
+ 
+-	fileStream.open(path.c_str(), ios_base::in);
++	char str[PATH_MAX];
++	snprintf(str, PATH_MAX, "%s/.glest/%s", getenv("HOME"), path.c_str());
++	fileStream.open(str, ios_base::in);
+ 	if(fileStream.fail()){
+-		throw runtime_error("Can't open propertyMap file: " + path);
++		fileStream.open(path.c_str(), ios_base::in); // use defaults
++		if(fileStream.fail())
++		throw runtime_error("Can't open propertyMap file: " + path + " cwd: "+ getenv("PWD"));
+ 	}
+ 
+ 	propertyMap.clear();
+@@ -72,7 +79,9 @@
+ void Properties::save(const string &path){
+ 	ofstream fileStream;
+ 
+-	fileStream.open(path.c_str(), ios_base::out | ios_base::trunc);
++	char str[PATH_MAX];
++	snprintf(str, PATH_MAX, "%s/.glest/%s", getenv("HOME"), path.c_str());
++	fileStream.open(str, ios_base::out | ios_base::trunc);
+ 
+ 	fileStream << "; === propertyMap File === \n";
+ 	fileStream << '\n';
