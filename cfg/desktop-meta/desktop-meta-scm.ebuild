@@ -46,6 +46,8 @@ kde-base/sweeper
 kde-base/superkaramba
 kde-base/thumbnailers
 
+x11-themes/gtk-engines
+
 dev? (
 	kde-base/klinkstatus
 	kde-base/okteta
