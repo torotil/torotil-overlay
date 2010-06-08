@@ -22,5 +22,4 @@ RDEPEND="
 	parley?     ( kde-base/parley )
 	rocs?       ( kde-base/rocs )
 	step?       ( kde-base/step )
-)
 "
