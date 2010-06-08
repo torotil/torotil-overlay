@@ -53,20 +53,7 @@ dev? (
 	kde-base/okteta
 )
 
-edu? (
-	kde-base/kalgebra
-	kde-base/kanagram
-	kde-base/kig
-	kde-base/kgeography
-	kde-base/kmplot
-	kde-base/kstars
-	kde-base/ktouch
-	kde-base/kwordquiz
-	kde-base/marble
-	kde-base/parley
-	kde-base/rocs
-	kde-base/step
-)
+edu? ( cfg/kdeedu-meta )
 
 games? (
 	kde-base/blinken
