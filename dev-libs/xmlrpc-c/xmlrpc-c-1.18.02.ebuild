@@ -11,7 +11,7 @@ SRC_URI="mirror://gentoo/${PN}/${P}.tar.bz2"
 HOMEPAGE="http://xmlrpc-c.sourceforge.net/"
 
 KEYWORDS="alpha amd64 arm hppa ia64 ppc ppc64 s390 sh sparc x86"
-IUSE="+curl +cxx tools +cgi abyss nostatic threads"
+IUSE="+curl +cxx tools +cgi abyss +nostatic threads"
 LICENSE="BSD"
 SLOT="0"
 
