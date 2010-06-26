@@ -1,28 +1,25 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/boost/boost-1.39.0.ebuild,v 1.3 2009/08/07 05:47:41 dev-zero Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-libs/boost/boost-1.41.0-r3.ebuild,v 1.11 2010/06/17 14:39:18 jsbronder Exp $
 
 EAPI="2"
 
 inherit python flag-o-matic multilib toolchain-funcs versionator check-reqs
 
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86"
-
 MY_P=${PN}_$(replace_all_version_separators _)
-PATCHSET_VERSION="${PV}-1"
 
 DESCRIPTION="Boost Libraries for C++"
 HOMEPAGE="http://www.boost.org/"
-SRC_URI="mirror://sourceforge/boost/${MY_P}.tar.bz2
-	mirror://gentoo/boost-patches-${PATCHSET_VERSION}.tbz2
-	http://www.gentoo.org/~dev-zero/distfiles/boost-patches-${PATCHSET_VERSION}.tbz2"
-LICENSE="freedist Boost-1.0"
+SRC_URI="mirror://sourceforge/boost/${MY_P}.tar.bz2"
+LICENSE="Boost-1.0"
 SLOT="$(get_version_component_range 1-2)"
-IUSE="debug doc +eselect expat icu mpi nostatic python tools"
+IUSE="debug doc +eselect expat icu mpi +nostatic python test tools"
+
+KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 ~s390 sh sparc x86 ~x86-fbsd"
 
 RDEPEND="icu? ( >=dev-libs/icu-3.3 )
 	expat? ( dev-libs/expat )
-	mpi? ( || ( >=sys-cluster/openmpi-1.3[cxx] =sys-cluster/openmpi-1.2*[-nocxx] ) )
+	mpi? ( || ( sys-cluster/openmpi[cxx] sys-cluster/mpich2[cxx,threads] ) )
 	sys-libs/zlib
 	python? ( virtual/python )
 	!!<=dev-libs/boost-1.35.0-r2
@@ -52,7 +49,17 @@ _add_line() {
 }
 
 pkg_setup() {
-	if has test ${FEATURES} ; then
+	# It doesn't compile with USE="python mpi" and python-3 (bug 295705)
+	if use python && use mpi ; then
+		if [[ "$(python_get_version --major)" != "2" ]]; then
+			eerror "The Boost.MPI python bindings do not support any other python version"
+			eerror "than 2.x. Please either use eselect to select a python 2.x version or"
+			eerror "disable the python and/or mpi use flag for =${CATEGORY}/${PF}."
+			die "unsupported python version"
+		fi
+	fi
+
+	if use test ; then
 		CHECKREQS_DISK_BUILD="1024"
 		check_reqs
 
@@ -78,12 +85,24 @@ pkg_setup() {
 }
 
 src_prepare() {
-	EPATCH_SOURCE="${WORKDIR}/patches"
-	EPATCH_SUFFIX="patch"
-	epatch
+	epatch "${FILESDIR}/remove-toolset-${PV}.patch"
 
-	epatch \
-		"${FILESDIR}/remove_toolset_from_targetname.patch"
+	 # bug 291660
+	epatch "${FILESDIR}/boost-${PV}-parameter-needs-python.patch"
+
+	# http://thread.gmane.org/gmane.comp.lib.boost.devel/196471
+	epatch "${FILESDIR}/boost-${PV}-mpi_process_group-missing-include.patch"
+
+	# https://svn.boost.org/trac/boost/ticket/3010
+	epatch "${FILESDIR}/boost-${PV}-iostreams-missing-include-guard.patch"
+
+	# bug 297163
+	# https://svn.boost.org/trac/boost/ticket/3352
+	epatch "${FILESDIR}/boost-${PV}-fix-CRC-on-x64-during-gzip-decompression.patch"
+
+	# bug 297500
+	# https://svn.boost.org/trac/boost/ticket/3724
+	epatch "${FILESDIR}/boost-${PV}-spirit-fixed-include-guard-conflict.patch"
 
 	# This enables building the boost.random library with /dev/urandom support
 	if [[ -e /dev/urandom ]] ; then
@@ -111,14 +130,18 @@ src_configure() {
 		compilerExecutable=$(tc-getCXX)
 	fi
 
-	# Huge number of strict-aliasing warnings cause a build failure w/ >= GCC 4.4 bug #252287
-	[[ $(gcc-version) > 4.3 ]] && append-flags -Wno-strict-aliasing
+	# Using -fno-strict-aliasing to prevent possible creation of invalid code.
+	append-flags -fno-strict-aliasing
+
+	# bug 298489
+	if use ppc || use ppc64 ; then
+		[[ $(gcc-version) > 4.3 ]] && append-flags -mno-altivec
+	fi;
 
 	use mpi && mpi="using mpi ;"
 
 	if use python ; then
-		python_version
-		pystring="using python : ${PYVER} : /usr :	/usr/include/python${PYVER} : /usr/lib/python${PYVER} ;"
+		pystring="using python : $(python_get_version) : /usr :	$(python_get_includedir) : $(python_get_libdir) ;"
 	fi
 
 	cat > "${S}/user-config.jam" << __EOF__
@@ -149,26 +172,35 @@ __EOF__
 	use mpi || OPTIONS="${OPTIONS} --without-mpi"
 	use python || OPTIONS="${OPTIONS} --without-python"
 
-	OPTIONS="${OPTIONS} --user-config=\"${S}/user-config.jam\" --boost-build=/usr/share/boost-build-${MAJOR_PV} --prefix=\"${D}/usr\" --layout=versioned"
-
-
-	LINKING="shared,static"
-	if use nostatic ; then
-		LINKING="shared"
+	# https://svn.boost.org/trac/boost/attachment/ticket/2597/add-disable-long-double.patch
+	if use sparc || use mips || use hppa || use arm || use x86-fbsd || use sh; then
+		OPTIONS="${OPTIONS} --disable-long-double"
 	fi
+
+	LINKING="${LINKING}"
+	if use nostatic ; then
+	  LINKING="shared"
+	fi
+
+	OPTIONS="${OPTIONS} pch=off --user-config=\"${S}/user-config.jam\" --boost-build=/usr/share/boost-build-${MAJOR_PV} --prefix=\"${D}/usr\" --layout=versioned"
 
 }
 
 src_compile() {
-
-	NUMJOBS=$(sed -e 's/.*\(\-j[ 0-9]\+\) .*/\1/; s/--jobs=\?/-j/' <<< ${MAKEOPTS})
-
-	einfo "Using the following options to build: "
-	einfo "  ${OPTIONS}"
+	jobs=$( echo " ${MAKEOPTS} " | \
+		sed -e 's/ --jobs[= ]/ -j /g' \
+			-e 's/ -j \([1-9][0-9]*\)/ -j\1/g' \
+			-e 's/ -j\>/ -j1/g' | \
+			( while read -d ' ' j ; do if [[ "${j#-j}" = "$j" ]]; then continue; fi; jobs="${j#-j}"; done; echo ${jobs} ) )
+	if [[ "${jobs}" != "" ]]; then NUMJOBS="-j"${jobs}; fi;
 
 	export BOOST_ROOT="${S}"
 
-	${BJAM} ${NUMJOBS} -q \
+	einfo "Using the following command to build: "
+	einfo "${BJAM} ${NUMJOBS} -q -d+2 gentoorelease ${OPTIONS}
+	threading=single,multi link=${LINKING} runtime-link=shared"
+
+	${BJAM} ${NUMJOBS} -q -d+2 \
 		gentoorelease \
 		${OPTIONS} \
 		threading=single,multi link=${LINKING} runtime-link=shared \
@@ -176,7 +208,11 @@ src_compile() {
 
 	# ... and do the whole thing one more time to get the debug libs
 	if use debug ; then
-		${BJAM} ${NUMJOBS} -q \
+		einfo "Using the following command to build: "
+		einfo "${BJAM} ${NUMJOBS} -q -d+2 gentoodebug ${OPTIONS}
+		threading=single,multi link=${LINKING} runtime-link=shared --buildid=debug"
+
+		${BJAM} ${NUMJOBS} -q -d+2 \
 			gentoodebug \
 			${OPTIONS} \
 			threading=single,multi link=${LINKING} runtime-link=shared \
@@ -186,7 +222,10 @@ src_compile() {
 
 	if use tools; then
 		cd "${S}/tools/"
-		${BJAM} ${NUMJOBS} -q \
+		einfo "Using the following command to build the tools: "
+		einfo "${BJAM} ${NUMJOBS} -q -d+2 gentoorelease ${OPTIONS}"
+
+		${BJAM} ${NUMJOBS} -q -d+2\
 			gentoorelease \
 			${OPTIONS} \
 			|| die "building tools failed"
@@ -195,12 +234,12 @@ src_compile() {
 }
 
 src_install () {
-	einfo "Using the following options to install: "
-	einfo "  ${OPTIONS}"
-
 	export BOOST_ROOT="${S}"
 
-	${BJAM} -q \
+	einfo "Using the following command to install: "
+	einfo "${BJAM} -q -d+2 gentoorelease ${OPTIONS} threading=single,multi link=${LINKING} runtime-link=shared --includedir=\"${D}/usr/include\" --libdir=\"${D}/usr/$(get_libdir)\" install"
+
+	${BJAM} -q -d+2 \
 		gentoorelease \
 		${OPTIONS} \
 		threading=single,multi link=${LINKING} runtime-link=shared \
@@ -209,7 +248,10 @@ src_install () {
 		install || die "install failed for options '${OPTIONS}'"
 
 	if use debug ; then
-		${BJAM} -q \
+		einfo "Using the following command to install: "
+		einfo "${BJAM} -q -d+2 gentoodebug ${OPTIONS} threading=single,multi link=${LINKING} runtime-link=shared --includedir=\"${D}/usr/include\" --libdir=\"${D}/usr/$(get_libdir)\" --buildid=debug"
+
+		${BJAM} -q -d+2 \
 			gentoodebug \
 			${OPTIONS} \
 			threading=single,multi link=${LINKING} runtime-link=shared \
@@ -227,10 +269,10 @@ src_install () {
 
 	# Move the mpi.so to the right place and make sure it's slotted
 	if use mpi && use python; then
-		mkdir -p "${D}/usr/$(get_libdir)/python${PYVER}/site-packages/boost_${MAJOR_PV}"
-		mv "${D}/usr/$(get_libdir)/mpi.so" "${D}/usr/$(get_libdir)/python${PYVER}/site-packages/boost_${MAJOR_PV}/"
-		touch "${D}/usr/$(get_libdir)/python${PYVER}/site-packages/boost_${MAJOR_PV}/__init__.py"
-		_add_line "python=\"/usr/$(get_libdir)/python${PYVER}/site-packages/boost_${MAJOR_PV}/mpi.so\""
+		mkdir -p "${D}$(python_get_sitedir)/boost_${MAJOR_PV}"
+		mv "${D}/usr/$(get_libdir)/mpi.so" "${D}$(python_get_sitedir)/boost_${MAJOR_PV}/"
+		touch "${D}$(python_get_sitedir)/boost_${MAJOR_PV}/__init__.py"
+		_add_line "python=\"$(python_get_sitedir)/boost_${MAJOR_PV}/mpi.so\""
 	fi
 
 	if use doc ; then
@@ -249,7 +291,7 @@ src_install () {
 		insinto /usr/share/doc/${PF}/html
 		doins LICENSE_1_0.txt
 
-		dosym /usr/include/boost /usr/share/doc/${PF}/html/boost
+		dosym /usr/include/boost-${MAJOR_PV}/boost /usr/share/doc/${PF}/html/boost
 	fi
 
 	cd "${D}/usr/$(get_libdir)"
@@ -268,24 +310,24 @@ src_install () {
 	# The threading libs obviously always gets the "-mt" (multithreading) tag
 	# some packages seem to have a problem with it. Creating symlinks...
 	for lib in libboost_thread-mt-${MAJOR_PV}{.a,$(get_libname)} ; do
-		test -e "${lib}" && dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
+		dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
 	done
 
 	# The same goes for the mpi libs
 	if use mpi ; then
 		for lib in libboost_mpi-mt-${MAJOR_PV}{.a,$(get_libname)} ; do
-			test -e "${lib}" && dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
+			dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
 		done
 	fi
 
 	if use debug ; then
 		for lib in libboost_thread-mt-${MAJOR_PV}-debug{.a,$(get_libname)} ; do
-			test -e "${lib}" && dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
+			dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
 		done
 
 		if use mpi ; then
 			for lib in libboost_mpi-mt-${MAJOR_PV}-debug{.a,$(get_libname)} ; do
-				test -e "${lib}" && dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
+				dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
 			done
 		fi
 	fi
@@ -337,7 +379,7 @@ src_install () {
 	cd "${S}/status"
 	if [ -f regress.log ] ; then
 		docinto status
-		dohtml *.{html,gif} ../boost.png
+		dohtml *.html ../boost.png
 		dodoc regress.log
 	fi
 
@@ -379,7 +421,10 @@ src_test() {
 	export BOOST_ROOT=${S}
 
 	cd "${S}/tools/regression/build"
-	${BJAM} -q \
+	einfo "Using the following command to build test helpers: "
+	einfo "${BJAM} -q -d+2 gentoorelease ${OPTIONS} process_jam_log compiler_status"
+
+	${BJAM} -q -d+2 \
 		gentoorelease \
 		${OPTIONS} \
 		process_jam_log compiler_status \
@@ -394,12 +439,15 @@ src_test() {
 	# but adapted to our needs.
 
 	# Run the tests & write them into a file for postprocessing
+	einfo "Using the following command to test: "
+	einfo "${BJAM} ${OPTIONS} --dump-tests"
+
 	${BJAM} \
 		${OPTIONS} \
 		--dump-tests 2>&1 | tee regress.log
 
 	# Postprocessing
-	cat regress.log | "${S}/tools/regression/build/bin/gcc-$(gcc-version)/gentoorelease/process_jam_log" --v2
+	cat regress.log | "${S}/tools/regression/build/bin/gcc-$(gcc-version)/gentoorelease/pch-off/process_jam_log" --v2
 	if test $? != 0 ; then
 		die "Postprocessing the build log failed"
 	fi
@@ -409,7 +457,7 @@ src_test() {
 __EOF__
 
 	# Generate the build log html summary page
-	"${S}/tools/regression/build/bin/gcc-$(gcc-version)/gentoorelease/compiler_status" --v2 \
+	"${S}/tools/regression/build/bin/gcc-$(gcc-version)/gentoorelease/pch-off/compiler_status" --v2 \
 		--comment "${S}/status/comment.html" "${S}" \
 		cs-$(uname).html cs-$(uname)-links.html
 	if test $? != 0 ; then
@@ -421,7 +469,10 @@ __EOF__
 }
 
 pkg_postinst() {
-	use eselect && eselect boost update
+	if use eselect ; then
+		eselect boost update || ewarn "eselect boost update failed."
+	fi
+
 	if [ ! -h "${ROOT}/etc/eselect/boost/active" ] ; then
 		elog "No active boost version found. Calling eselect to select one..."
 		eselect boost update
