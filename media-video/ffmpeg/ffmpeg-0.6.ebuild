@@ -1,6 +1,6 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/ffmpeg/ffmpeg-0.5_p20373.ebuild,v 1.11 2010/03/13 14:33:52 lu_zero Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/ffmpeg/ffmpeg-0.6.ebuild,v 1.4 2010/06/22 08:57:42 fauli Exp $
 
 EAPI=2
 SCM=""
@@ -24,12 +24,16 @@ FFMPEG_REVISION="${PV#*_p}"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="alpha amd64 arm hppa ia64 ppc ppc64 sparc x86 ~x86-fbsd"
+if [[ ${PV} == *9999* ]]; then
+	KEYWORDS="~x86"
+else
+	KEYWORDS="~amd64 ~x86 ~x86-fbsd"
+fi
 IUSE="+3dnow +3dnowext alsa altivec cpudetection custom-cflags debug dirac
-	  doc ieee1394 +encode faac faad gsm ipv6 jack +mmx +mmxext vorbis test
-	  theora threads x264 xvid network zlib sdl X mp3 opencore-amr
-	  oss pic schroedinger +hardcoded-tables bindist v4l v4l2
-	  speex +ssse3 jpeg2k vdpau static"
+	  doc ieee1394 +encode faac faad gsm jack +mmx +mmxext vorbis test
+	  theora threads x264 xvid network zlib sdl X mp3 amr
+	  oss pic rtmp schroedinger +hardcoded-tables bindist v4l v4l2
+	  speex +ssse3 jpeg2k vaapi vdpau vpx static"
 
 VIDEO_CARDS="nvidia"
 
@@ -43,8 +47,8 @@ RDEPEND="sdl? ( >=media-libs/libsdl-1.2.10 )
 		faac? ( media-libs/faac )
 		mp3? ( media-sound/lame )
 		vorbis? ( media-libs/libvorbis media-libs/libogg )
-		theora? ( media-libs/libtheora[encode] media-libs/libogg )
-		x264? ( >=media-libs/x264-0.0.20091021 )
+		theora? ( >=media-libs/libtheora-1.1.1[encode] media-libs/libogg )
+		x264? ( >=media-libs/x264-0.0.20100605 )
 		xvid? ( >=media-libs/xvid-1.1.0 ) )
 	faad? ( >=media-libs/faad2-2.6.1 )
 	zlib? ( sys-libs/zlib )
@@ -53,18 +57,22 @@ RDEPEND="sdl? ( >=media-libs/libsdl-1.2.10 )
 	dirac? ( media-video/dirac )
 	gsm? ( >=media-sound/gsm-1.0.12-r1 )
 	jpeg2k? ( >=media-libs/openjpeg-1.3-r2 )
-	opencore-amr? ( media-libs/opencore-amr )
+	amr? ( media-libs/opencore-amr )
+	rtmp? ( media-video/rtmpdump )
 	schroedinger? ( media-libs/schroedinger )
 	speex? ( >=media-libs/speex-1.2_beta3 )
 	jack? ( media-sound/jack-audio-connection-kit )
 	X? ( x11-libs/libX11 x11-libs/libXext )
+	vaapi? ( x11-libs/libva )
+	vpx? ( media-libs/libvpx )
 	video_cards_nvidia? (
-		vdpau? ( >=x11-drivers/nvidia-drivers-180.29 )
+		vdpau? ( x11-libs/libvdpau )
 	)"
 
 DEPEND="${RDEPEND}
 	>=sys-devel/make-3.81
 	dirac? ( dev-util/pkgconfig )
+	rtmp? ( dev-util/pkgconfig )
 	schroedinger? ( dev-util/pkgconfig )
 	mmx? ( dev-lang/yasm )
 	doc? ( app-text/texi2html )
@@ -89,12 +97,8 @@ src_configure() {
 	use debug || myconf="${myconf} --disable-debug"
 	use zlib || myconf="${myconf} --disable-zlib"
 	use sdl || myconf="${myconf} --disable-ffplay"
-
-	if use network; then
-		use ipv6 || myconf="${myconf} --disable-ipv6"
-	else
-		myconf="${myconf} --disable-network"
-	fi
+	use network || myconf="${myconf} --disable-network"
+	use static || myconf="${myconf} --disable-static"
 
 	use custom-cflags && myconf="${myconf} --disable-optimizations"
 	use cpudetection && myconf="${myconf} --enable-runtime-cpudetect"
@@ -107,6 +111,13 @@ src_configure() {
 		use theora && myconf="${myconf} --enable-libtheora"
 		use x264 && myconf="${myconf} --enable-libx264"
 		use xvid && myconf="${myconf} --enable-libxvid"
+		if use bindist
+		then
+			use faac && ewarn "faac is nonfree and cannot be distributed;
+			disabling faac support."
+		else
+			use faac && myconf="${myconf} --enable-libfaac --enable-nonfree"
+		fi
 	else
 		myconf="${myconf} --disable-encoders"
 	fi
@@ -127,25 +138,12 @@ src_configure() {
 	use threads && myconf="${myconf} --enable-pthreads"
 
 	# Decoders
-	use opencore-amr && myconf="${myconf} --enable-libopencore-amrwb
+	use amr && myconf="${myconf} --enable-libopencore-amrwb
 		--enable-libopencore-amrnb"
-	for i in faad dirac schroedinger speex; do
+	for i in gsm faad dirac rtmp schroedinger speex vpx; do
 		use $i && myconf="${myconf} --enable-lib$i"
 	done
 	use jpeg2k && myconf="${myconf} --enable-libopenjpeg"
-	if use gsm; then
-		myconf="${myconf} --enable-libgsm"
-		# Crappy detection or our installation is weird, pick one (FIXME)
-		append-flags -I/usr/include/gsm
-	fi
-	if use bindist
-	then
-		use faac && ewarn "faac is nonfree and cannot be distributed; disabling
-		faac support."
-	else
-		use faac && myconf="${myconf} --enable-libfaac"
-		{ use faac ; } && myconf="${myconf} --enable-nonfree"
-	fi
 
 	#for i in h264_vdpau mpeg1_vdpau mpeg_vdpau vc1_vdpau wmv3_vdpau; do
 	#	use video_cards_nvidia || myconf="${myconf} --disable-decoder=$i"
@@ -153,6 +151,7 @@ src_configure() {
 	#done
 	use video_cards_nvidia || myconf="${myconf} --disable-vdpau"
 	use vdpau || myconf="${myconf} --disable-vdpau"
+	use vaapi || myconf="${myconf} --disable-vaapi"
 
 	# CPU features
 	for i in mmx ssse3 altivec ; do
@@ -177,6 +176,7 @@ src_configure() {
 	# will just ignore it.
 	for i in $(get-flag march) $(get-flag mcpu) $(get-flag mtune) ; do
 		[ "${i}" = "native" ] && i="host" # bug #273421
+		[[ ${i} = *-sse3 ]] && i="${i%-sse3}" # bug 283968
 		myconf="${myconf} --cpu=$i"
 		break
 	done
@@ -204,6 +204,7 @@ src_configure() {
 
 	# Misc stuff
 	use hardcoded-tables && myconf="${myconf} --enable-hardcoded-tables"
+	use doc || myconf="${myconf} --disable-doc"
 
 	# Specific workarounds for too-few-registers arch...
 	if [[ $(tc-arch) == "x86" ]]; then
@@ -219,8 +220,6 @@ src_configure() {
 			ewarn ""
 		fi
 	fi
-
-	use static || myconf="${myconf} --disable-static"
 
 	cd "${S}"
 	./configure \
@@ -239,7 +238,7 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "Install Failed"
+	emake DESTDIR="${D}" install install-man || die "Install Failed"
 
 	dodoc Changelog README INSTALL
 	dodoc doc/*
