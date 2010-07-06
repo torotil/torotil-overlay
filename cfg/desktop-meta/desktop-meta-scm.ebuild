@@ -6,7 +6,7 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="dev edu games sci"
+IUSE="dev edu games +print +scan sci"
 
 RDEPEND="
 kde-base/kdeartwork-meta
@@ -62,4 +62,7 @@ sci? (
 	kde-base/cantor
 	kde-base/kalzium
 )
+
+scan? ( media-gfx/xsane )
+print? ( net-print/gutenprint )
 "
