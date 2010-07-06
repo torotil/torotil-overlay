@@ -6,7 +6,7 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
+IUSE="+ebuild"
 
 RDEPEND="
 app-arch/p7zip
