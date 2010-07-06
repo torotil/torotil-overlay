@@ -34,4 +34,7 @@ web? (
   dev-db/postgresql-server
   php? ( dev-lang/php[cgi] )
 )
+python? (
+  dev-python/virtualenv
+)
 "
