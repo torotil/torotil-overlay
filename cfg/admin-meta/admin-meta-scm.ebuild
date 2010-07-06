@@ -9,9 +9,11 @@ KEYWORDS="amd64"
 IUSE="X kde"
 
 RDEPEND="
+app-admin/apg
 app-antivirus/clamav
 net-analyzer/tcpdump
 sys-fs/squashfs-tools
+
 
 X? (
   x11-misc/xrestop
