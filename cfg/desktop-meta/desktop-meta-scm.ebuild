@@ -45,6 +45,7 @@ kde-base/libkipi
 kde-base/sweeper
 kde-base/superkaramba
 kde-base/thumbnailers
+kde-base/kruler
 
 x11-themes/gtk-engines
 
@@ -55,37 +56,7 @@ dev? (
 
 edu? ( cfg/kdeedu-meta )
 
-games? (
-	kde-base/blinken
-	kde-base/bomber
-	kde-base/bovo
-	kde-base/granatier
-	kde-base/kapman
-	kde-base/katomic
-	kde-base/kbattleship
-	kde-base/kblackbox
-	kde-base/kblocks
-	kde-base/kbounce
-	kde-base/kbreakout
-	kde-base/kbruch
-	kde-base/kfourinline
-	kde-base/kgoldrunner
-	kde-base/kiriki
-	kde-base/kjumpingcube
-	kde-base/klines
-	kde-base/kmahjongg
-	kde-base/kmines
-	kde-base/knetwalk
-	kde-base/konquest
-	kde-base/kpat
-	kde-base/kreversi
-	kde-base/kruler
-	kde-base/ksame
-	kde-base/kshisen
-	kde-base/ksirk
-	kde-base/ksquares
-	kde-base/rocs
-)
+games? ( cfg/games-meta )
 
 sci? (
 	kde-base/cantor
