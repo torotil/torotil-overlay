@@ -6,14 +6,19 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="+encode +lmms +rip +tag"
+IUSE="+abc +audio +encode +lmms +rip +tag +video"
 
 RDEPEND="
-kde-base/dragonplayer
-media-sound/amarok
-media-video/vlc
-media-video/smplayer
-
+abc? (
+  media-sound/abcm2ps
+  media-sound/abcmidi
+  media-sound/lilypond
+  media-sound/qpitch
+  media-sound/timidity++
+)
+audio? (
+  media-sound/amarok
+)
 encode? (
   media-sound/vorbis-tools
 )
@@ -27,6 +32,11 @@ rip? (
 tag? (
   media-sound/mp3diags
   media-sound/quodlibet
+)
+video? (
+  kde-base/dragonplayer
+  media-video/vlc
+  media-video/smplayer
 )
 "
 
