@@ -6,7 +6,7 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="dev edu +flash games +print +scan sci"
+IUSE="dev +download edu +flash games +print +scan sci"
 
 RDEPEND="
 x11-base/xorg-server
@@ -78,4 +78,5 @@ flash? (
   www-plugins/nspluginwrapper
 )
 
+download? ( net-p2p/vuze )
 "
