@@ -30,9 +30,9 @@ RDEPEND="
 	kmines?  ( kde-base/kmines )
 	knetwalk?    ( kde-base/knetwalk )
 	kpat?    ( kde-base/kpat )
-	kreversi?( kde-base/kreversi )
+	kreversi?    ( kde-base/kreversi )
 	ksame?   ( kde-base/ksame )
 	kshisen? ( kde-base/kshisen )
 	ksirk?   ( kde-base/ksirk )
-	ksquares?( kde-base/ksquares )
+	ksquares?    ( kde-base/ksquares )
 "
