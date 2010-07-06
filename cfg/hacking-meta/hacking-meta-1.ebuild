@@ -12,5 +12,6 @@ RDEPEND="
   net-analyzer/netcat
   net-analyzer/nmap
   net-analyzer/wireshark
+  net-dns/bind-tools
   net-wireless/aircrack-ng
 "
