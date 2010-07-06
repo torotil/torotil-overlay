@@ -12,10 +12,12 @@ RDEPEND="
 app-admin/apg
 app-antivirus/clamav
 net-analyzer/tcpdump
+sys-apps/paludis-tools
 sys-fs/squashfs-tools
-
 
 X? (
   x11-misc/xrestop
+  app-emulation/virtualbox-ose
+  app-emulation/virtualbox-ose-additions
 )
 "

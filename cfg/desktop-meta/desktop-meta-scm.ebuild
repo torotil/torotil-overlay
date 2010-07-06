@@ -9,6 +9,11 @@ KEYWORDS="amd64"
 IUSE="dev edu games +print +scan sci"
 
 RDEPEND="
+x11-base/xorg-server
+
+kde-misc/krusader
+kde-misc/filelight
+
 kde-base/kdeartwork-meta
 kde-base/kdebase-meta
 kde-base/kde-l10n
