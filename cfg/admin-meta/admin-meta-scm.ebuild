@@ -11,6 +11,7 @@ IUSE="X kde"
 RDEPEND="
 app-admin/apg
 app-antivirus/clamav
+app-text/convmv
 net-analyzer/tcpdump
 sys-apps/paludis-tools
 sys-fs/squashfs-tools
