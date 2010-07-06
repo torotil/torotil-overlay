@@ -6,7 +6,7 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="+koffice +fonts"
+IUSE="+koffice +fonts +latex"
 
 RDEPEND="
 app-office/dia
@@ -14,6 +14,8 @@ app-office/kmymoney
 app-office/openoffice
 app-office/scribus
 media-gfx/inkscape
+media-gfx/gimp
+sci-calculators/qalculate-gtk
 
 fonts? (
   media-fonts/exljbris-free
@@ -21,4 +23,9 @@ fonts? (
 )
 
 koffice? ( app-office/koffice-meta )
+
+latex? (
+  app-editors/kile
+  app-text/texlive
+)
 "
