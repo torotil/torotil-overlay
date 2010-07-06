@@ -6,7 +6,7 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="dev edu games +print +scan sci"
+IUSE="dev edu +flash games +print +scan sci"
 
 RDEPEND="
 x11-base/xorg-server
@@ -70,4 +70,12 @@ sci? (
 
 scan? ( media-gfx/xsane )
 print? ( net-print/gutenprint )
+
+kde-base/akregator
+www-client/mozilla-firefox
+flash? (
+  www-plugins/adobe-flash
+  www-plugins/nspluginwrapper
+)
+
 "
