@@ -9,16 +9,16 @@ KEYWORDS="amd64"
 IUSE="dev +devel +download edu +flash games +hacking +pim +print +scan sci"
 
 RDEPEND="
-cfg/admin-meta
-cfg/communication-meta
-cfg/media-meta
-cfg/office-meta
-cfg/sys-meta
+cfg/admin
+cfg/communication
+cfg/media
+cfg/office
+cfg/sys
 
-edu? ( cfg/kdeedu-meta )
-games? ( cfg/games-meta )
-devel? ( cfg/devel-meta )
-hacking? ( cfg/hacking-meta )
+edu? ( cfg/kdeedu )
+games? ( cfg/games )
+devel? ( cfg/devel )
+hacking? ( cfg/hacking )
 pim? ( kde-base/kdepim-meta ) 
 
 x11-base/xorg-server
