@@ -6,7 +6,7 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="dev +devel +download edu +flash games +hacking +print +scan sci"
+IUSE="dev +devel +download edu +flash games +hacking +pim +print +scan sci"
 
 RDEPEND="
 cfg/admin-meta
@@ -19,7 +19,7 @@ edu? ( cfg/kdeedu-meta )
 games? ( cfg/games-meta )
 devel? ( cfg/devel-meta )
 hacking? ( cfg/hacking-meta )
-
+pim? ( kde-base/kdepim-meta ) 
 
 x11-base/xorg-server
 
