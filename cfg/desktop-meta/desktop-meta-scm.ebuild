@@ -6,9 +6,21 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="dev +download edu +flash games +print +scan sci"
+IUSE="dev +devel +download edu +flash games +hacking +print +scan sci"
 
 RDEPEND="
+cfg/admin-meta
+cfg/communication-meta
+cfg/media-meta
+cfg/office-meta
+cfg/sys-meta
+
+edu? ( cfg/kdeedu-meta )
+games? ( cfg/games-meta )
+devel? ( cfg/devel-meta )
+hacking? ( cfg/hacking-meta )
+
+
 x11-base/xorg-server
 
 kde-misc/krusader
@@ -58,10 +70,6 @@ dev? (
 	kde-base/klinkstatus
 	kde-base/okteta
 )
-
-edu? ( cfg/kdeedu-meta )
-
-games? ( cfg/games-meta )
 
 sci? (
 	kde-base/cantor
