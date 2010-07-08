@@ -65,6 +65,7 @@ kde-base/thumbnailers
 kde-base/kruler
 
 x11-themes/gtk-engines
+kde-misc/kcm_gtk
 
 dev? (
 	kde-base/klinkstatus
