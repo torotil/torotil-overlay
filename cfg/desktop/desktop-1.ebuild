@@ -87,5 +87,5 @@ flash? (
   www-plugins/nspluginwrapper
 )
 
-download? ( net-p2p/vuze )
+download? ( net-p2p/ktorrent )
 "
