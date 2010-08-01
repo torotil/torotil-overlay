@@ -15,7 +15,7 @@ kde-base/krfb
 mail-filter/bogofilter
 net-im/gajim
 net-irc/konversation
-www-client/mozilla-firefox
+www-client/firefox
 
 skype? ( net-im/skype )
 
