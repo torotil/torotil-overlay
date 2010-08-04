@@ -4,7 +4,7 @@
 EAPI=2
 
 if [[ ${PV} = 9999* ]]; then
-	EBZR_REPO_URI="lp:~torotil/s25rttr/fix-cmake"
+	EBZR_REPO_URI="lp:s25rttr"
 	BZR="bzr"
 fi
 
