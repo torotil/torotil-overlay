@@ -4,7 +4,7 @@
 EAPI=2
 
 if [[ ${PV} = 9999* ]]; then
-	EBZR_REPO_URI="lp:~mereandor/s25rttr/cmake"
+	EBZR_REPO_URI="lp:~torotil/s25rttr/fix-cmake"
 	BZR="bzr"
 fi
 
@@ -18,6 +18,7 @@ KEYWORDS="~amd64"
 IUSE="cdinstall"
 RDEPEND=">=media-libs/libsdl-1.2
 	>=media-libs/sdl-mixer-1.2
+	>=net-misc/miniupnpc-1.4.20100609
 "
 DEPEND="${RDEPEND} >=dev-util/cmake-2.6"
 RDEPEND="${RDEPEND}
