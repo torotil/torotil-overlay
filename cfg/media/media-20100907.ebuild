@@ -36,7 +36,7 @@ tag? (
 video? (
   kde-base/dragonplayer
   media-video/vlc
-  media-video/smplayer
+  media-video/mplayer
 )
 "
 
