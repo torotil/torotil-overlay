@@ -81,7 +81,7 @@ scan? ( media-gfx/xsane )
 print? ( net-print/gutenprint )
 
 kde-base/akregator
-www-client/mozilla-firefox
+www-client/firefox
 flash? (
   www-plugins/adobe-flash
   www-plugins/nspluginwrapper

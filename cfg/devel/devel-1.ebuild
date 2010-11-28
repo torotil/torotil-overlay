@@ -28,7 +28,7 @@ php? (
   dev-util/kdevelop-php-docs
 )
 web? (
-  www-client/mozilla-firefox
+  www-client/firefox
   www-client/opera
   www-servers/lighttpd
   dev-db/postgresql-server
