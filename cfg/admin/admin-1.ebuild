@@ -26,7 +26,7 @@ sys-apps/iproute2
 sys-apps/lm_sensors
 sys-apps/lshw
 sys-apps/paludis-tools
-sys-boot/grub-static
+>sys-boot/grub-1
 sys-fs/dosfstools
 sys-fs/lvm2
 sys-fs/reiserfsprogs
