@@ -8,7 +8,7 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE="blinken bomber bovo granatier kapman katomic kbattleship kblackbox kblocks
 kbreakout kbruch kfourline kiriki klines kmahjongg kmines knetwalk kpat kreversi
-ksame kshisen ksirk ksquares
+kshisen ksirk ksquares
 "
 
 RDEPEND="
@@ -31,7 +31,6 @@ RDEPEND="
 	knetwalk?    ( kde-base/knetwalk )
 	kpat?    ( kde-base/kpat )
 	kreversi?    ( kde-base/kreversi )
-	ksame?   ( kde-base/ksame )
 	kshisen? ( kde-base/kshisen )
 	ksirk?   ( kde-base/ksirk )
 	ksquares?    ( kde-base/ksquares )

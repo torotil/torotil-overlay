@@ -18,7 +18,7 @@ KEYWORDS="~amd64"
 IUSE="cdinstall"
 RDEPEND=">=media-libs/libsdl-1.2
 	>=media-libs/sdl-mixer-1.2
-	>=net-misc/miniupnpc-1.4.20100609
+	>=net-libs/miniupnpc-1.4.20100609
 "
 DEPEND="${RDEPEND} >=dev-util/cmake-2.6"
 RDEPEND="${RDEPEND}

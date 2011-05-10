@@ -11,7 +11,7 @@ IUSE="+koffice +fonts +latex"
 RDEPEND="
 app-office/dia
 app-office/kmymoney
-app-office/openoffice
+app-office/libreoffice
 app-office/scribus
 media-gfx/inkscape
 media-gfx/gimp

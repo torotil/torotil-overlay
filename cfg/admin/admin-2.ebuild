@@ -42,6 +42,6 @@ x11-misc/read-edid
 X? (
   x11-misc/xrestop
   app-emulation/virtualbox
-  app-emulation/virtualbox-ose-additions
+  app-emulation/virtualbox-additions
 )
 "

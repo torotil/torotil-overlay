@@ -52,7 +52,6 @@ kde-base/kdenetwork-filesharing
 kde-base/kdeplasma-addons
 kde-base/kfilereplace
 kde-base/kgamma
-kde-base/knetworkconf
 kde-base/kommander
 kde-base/krdc
 kde-base/ksnapshot
