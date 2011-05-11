@@ -6,13 +6,13 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="X kde"
+IUSE="X clamav kde"
 
 RDEPEND="
 app-admin/apg
 app-admin/localepurge
 app-admin/sudo
-app-antivirus/clamav
+clamav? ( app-antivirus/clamav )
 app-editors/vim
 app-shells/zsh    
 app-text/convmv
