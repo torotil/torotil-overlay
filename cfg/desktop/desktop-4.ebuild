@@ -24,7 +24,7 @@ pim? ( kde-base/kdepim-meta )
 x11-base/xorg-server
 
 kde-misc/krusader
-kde-misc/filelight
+kde-base/filelight
 
 kde-base/kdeartwork-meta
 kde-base/kdebase-meta
@@ -56,7 +56,6 @@ kde-base/kommander
 kde-base/krdc
 kde-base/ksnapshot
 kde-base/ksystemlog
-kde-base/kweather
 kde-base/libkipi
 kde-base/sweeper
 kde-base/superkaramba
