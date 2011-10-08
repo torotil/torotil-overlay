@@ -19,7 +19,6 @@ IUSE=""
 S="${WORKDIR}/${PN}"
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}_gentoo.patch"
 	rm -rf doc/programming/cvs
 }
 
