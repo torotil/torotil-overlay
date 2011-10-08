@@ -9,7 +9,7 @@ inherit eutils toolchain-funcs
 MY_PV="${PV//./-}"
 DESCRIPTION="Programs for processing ABC music notation files"
 HOMEPAGE="http://abc.sourceforge.net/abcMIDI/"
-SRC_URI="mirror://sourceforge/abc/abcMIDI-${MY_PV}.zip"
+SRC_URI="http://ifdo.pugmarks.com/~seymour/runabc/abcMIDI-${MY_PV}.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -32,5 +32,5 @@ src_compile() {
 src_install() {
 	emake DESTDIR="${D}" install prefix="/usr" docdir="share/doc/${PF}" || die "Unable to install"
 	docinto programming
-	dodoc doc/programming/* *.abc || die "Unable to install documentation"
+	dodoc doc/programming/* || die "Unable to install documentation"
 }

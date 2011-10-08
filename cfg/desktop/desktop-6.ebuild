@@ -43,6 +43,7 @@ kde-base/kate
 kde-base/ksaneplugin
 kde-base/printer-applet
 kde-base/system-config-printer-kde
+kde-misc/kcm_touchpad
 
 kde-base/ark
 kde-base/kcharselect
