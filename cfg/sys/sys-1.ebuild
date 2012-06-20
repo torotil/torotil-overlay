@@ -13,6 +13,7 @@ app-admin/metalog
 net-misc/openntpd
 net-misc/dhcpcd
 sys-apps/paludis
+sys-apps/kbd-neo
 sys-fs/ntfs3g
 sys-process/fcron
 "
