@@ -6,19 +6,17 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="+ebuild +kde +php +python +web"
+IUSE="+ebuild +kde +php +postgres +python +web +cross-browser"
 
 RDEPEND="
-app-arch/p7zip
 dev-db/mysql-workbench
-dev-db/pgadmin3
 dev-util/kdevelop
 dev-vcs/git
+kde-base/kompare
 kde-base/umbrello
 sys-devel/gdb
 
 ebuild? (
-  app-portage/overlay-utils
 )
 kde? (
   x11-wm/openbox
@@ -28,13 +26,24 @@ php? (
   dev-util/kdevelop-php-docs
 )
 web? (
+  dev-java/yuicompressor
   www-client/firefox
-  www-client/opera
   www-servers/lighttpd
-  dev-db/postgresql-server
-  php? ( dev-lang/php[cgi] )
+  php? (
+  	dev-lang/php[fpm]
+  )
+  cross-browser? (
+    app-emulation/virtualbox
+    www-client/opera
+    www-client/chromium
+	www-client/rekonq
+  )
 )
 python? (
   dev-python/virtualenv
+)
+postgres? (
+  dev-db/pgadmin3
+  dev-db/postgresql-server
 )
 "
