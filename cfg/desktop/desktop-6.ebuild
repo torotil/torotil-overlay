@@ -83,7 +83,6 @@ kde-base/akregator
 www-client/firefox
 flash? (
   www-plugins/adobe-flash
-  www-plugins/nspluginwrapper
 )
 
 download? ( net-p2p/ktorrent )
