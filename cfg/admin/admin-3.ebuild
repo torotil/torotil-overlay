@@ -25,7 +25,6 @@ sys-apps/dmidecode
 sys-apps/iproute2
 sys-apps/lm_sensors
 sys-apps/lshw
-sys-apps/paludis-tools
 >sys-boot/grub-1
 sys-fs/dosfstools
 sys-fs/lvm2
@@ -37,9 +36,9 @@ sys-power/powertop
 sys-process/htop
 sys-process/iotop
 sys-process/lsof
-x11-misc/read-edid
 
 X? (
+  x11-misc/read-edid
   x11-misc/xrestop
   app-emulation/virtualbox
   app-emulation/virtualbox-additions
