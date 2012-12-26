@@ -10,7 +10,7 @@ IUSE=""
 
 RDEPEND="
 app-admin/metalog
-net-misc/openntpd
+net-misc/ntp
 net-misc/dhcpcd
 sys-apps/paludis
 sys-apps/kbd-neo

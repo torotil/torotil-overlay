@@ -29,11 +29,10 @@ lmms? (
 )
 rip? (
   app-cdr/k3b
-  kde-base/kdemultimedia-kioslaves
 )
 tag? (
-  media-sound/mp3diags
   media-sound/quodlibet
+  media-sound/mp3diags
 )
 video? (
   kde-base/dragonplayer
