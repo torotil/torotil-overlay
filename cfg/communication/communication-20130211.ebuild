@@ -13,8 +13,8 @@ kde-base/kmail
 kde-base/knode
 kde-base/krfb
 mail-filter/bogofilter
-net-im/gajim
 net-irc/konversation
+kde-base/kopete
 www-client/firefox
 
 skype? ( net-im/skype )
