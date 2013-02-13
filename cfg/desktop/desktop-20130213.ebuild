@@ -58,7 +58,6 @@ kde-base/krdc
 kde-base/ksnapshot
 kde-base/ksystemlog
 kde-base/libkipi
-kde-base/sweeper
 kde-base/superkaramba
 kde-base/thumbnailers
 kde-base/kruler
