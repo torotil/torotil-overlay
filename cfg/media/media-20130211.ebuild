@@ -31,11 +31,10 @@ rip? (
   app-cdr/k3b
 )
 tag? (
-  media-sound/quodlibet
   media-sound/mp3diags
 )
 video? (
-  kde-base/dragonplayer
+  kde-base/dragon
   media-video/vlc
   media-video/mplayer
 )
