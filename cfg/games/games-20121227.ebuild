@@ -18,7 +18,6 @@ RDEPEND="
 	granatier?   ( kde-base/granatier )
 	kapman?  ( kde-base/kapman )
 	katomic? ( kde-base/katomic )
-	kbattleship? ( kde-base/kbattleship )
 	kblackbox?   ( kde-base/kblackbox )
 	kblocks? ( kde-base/kblocks )
 	kbreakout?   ( kde-base/kbreakout )
