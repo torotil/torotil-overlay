@@ -3,15 +3,14 @@
 
 EAPI=2
 
-if [[ ${PV} = 9999* ]]; then
-	EBZR_REPO_URI="lp:s25rttr"
-	BZR="bzr"
-fi
+inherit games eutils
 
-inherit games ${BZR} eutils
-
+REVISION="9022"
 DESCRIPTION="An opensource remake of the famous game The Settlers II. You need the sound and graphic data from the original game to make this work."
 HOMEPAGE="http://www.siedler25.org/"
+SRC_URI="http://bazaar.launchpad.net/~flosoft/${PN}/${PV}/tarball/${REVISION}"
+RESTRICT="mirror"
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -24,19 +23,23 @@ DEPEND="${RDEPEND} >=dev-util/cmake-2.6"
 RDEPEND="${RDEPEND}
 	cdinstall? ( =games-strategy/s25rttr-data-1 )"
 
-SOURCE=${S}
-S=${S}/build-dir
-
 function src_unpack() {
-	# workaround for 287055
-	LC_ALL="$(locale -a | grep utf8 | head -n1)" bzr_src_unpack
+	tar -zxf "${DISTDIR}/${A}"
+	cd "./~flosoft"
+	epatch "${FILESDIR}/s25rttr-0.8-no-dbg-or-bundled-libraries.patch"
 }
+
+SOURCE="${WORKDIR}/~flosoft/s25rttr/0.8"
+S="${SOURCE}/build-dir"
 
 function src_prepare() {
 	cd ${SOURCE}
-	mkdir -p .bzr/branch build/S2
-	bzr revno "${EBZR_STORE_DIR}/${EBZR_CACHE_DIR}" > .bzr/branch/last-revision
+	mkdir -p build/S2
 	#epatch ${FILESDIR}/.patch
+	# remove bundled dev-lang/lua
+	rm -rf contrib/lua
+	mkdir -p .bzr/branch
+	echo ${REVISION} > .bzr/branch/last-revision
 	mkdir ${S}
 }
 
