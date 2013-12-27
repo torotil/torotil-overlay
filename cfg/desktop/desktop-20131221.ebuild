@@ -23,7 +23,6 @@ pim? ( kde-base/kdepim-meta )
 
 x11-base/xorg-server
 
-kde-misc/krusader
 kde-base/filelight
 
 kde-base/kdeartwork-meta
@@ -41,14 +40,12 @@ kde-base/gwenview
 kde-base/kamera
 kde-base/kate
 kde-base/ksaneplugin
-kde-base/printer-applet
-kde-base/system-config-printer-kde
 kde-misc/kcm_touchpad
+kde-misc/kde-gtk-config
 
 kde-base/ark
 kde-base/kcharselect
 kde-base/kcolorchooser
-kde-base/kdegraphics-strigi-analyzer
 kde-base/kdenetwork-filesharing
 kde-base/kdeplasma-addons
 kde-base/kfilereplace
@@ -63,7 +60,6 @@ kde-base/thumbnailers
 kde-base/kruler
 
 x11-themes/gtk-engines
-kde-misc/kcm-gtk-config
 
 dev? (
 	kde-base/klinkstatus

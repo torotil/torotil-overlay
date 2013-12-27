@@ -18,9 +18,6 @@ sys-devel/gdb
 
 ebuild? (
 )
-kde? (
-  x11-wm/openbox
-)
 php? (
   dev-util/kdevelop-php
   dev-util/kdevelop-php-docs
