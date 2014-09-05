@@ -32,7 +32,6 @@ kde-base/kde-l10n
 kde-base/kget
 kde-base/kgpg
 kde-base/kmix
-kde-base/kwallet
 	
 kde-base/kscd
 
