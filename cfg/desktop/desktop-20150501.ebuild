@@ -39,7 +39,7 @@ kde-base/gwenview
 kde-base/kamera
 kde-base/kate
 kde-base/ksaneplugin
-kde-misc/kcm_touchpad
+kde-misc/kcm-touchpad
 kde-misc/kde-gtk-config
 
 kde-base/ark

@@ -9,7 +9,6 @@ KEYWORDS="amd64"
 IUSE="+ebuild +kde +php +postgres +python +web +cross-browser"
 
 RDEPEND="
-dev-db/mysql-workbench
 dev-util/kdevelop
 dev-vcs/git
 kde-base/kompare
@@ -23,7 +22,6 @@ php? (
   dev-util/kdevelop-php-docs
 )
 web? (
-  dev-java/yuicompressor
   www-client/firefox
   www-servers/lighttpd
   php? (
@@ -41,6 +39,6 @@ python? (
 )
 postgres? (
   dev-db/pgadmin3
-  dev-db/postgresql-server
+  dev-db/postgresql[server]
 )
 "
