@@ -79,5 +79,5 @@ flash? (
   www-plugins/adobe-flash
 )
 
-download? ( net-p2p/ktorrent )
+download? ( net-p2p/qbittorrent )
 "
