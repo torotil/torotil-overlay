@@ -6,17 +6,13 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="+skype"
+IUSE=""
 
 RDEPEND="
-kde-base/kmail
 kde-base/knode
 kde-apps/krfb
-mail-filter/bogofilter
+mail-client/thunderbird
 net-irc/konversation
 kde-apps/kopete
-www-client/firefox
-
-skype? ( net-im/skype )
-
+www-client/chromium
 "
