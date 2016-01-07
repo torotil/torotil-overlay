@@ -11,10 +11,10 @@ IUSE="+skype"
 RDEPEND="
 kde-base/kmail
 kde-base/knode
-kde-base/krfb
+kde-apps/krfb
 mail-filter/bogofilter
 net-irc/konversation
-kde-base/kopete
+kde-apps/kopete
 www-client/firefox
 
 skype? ( net-im/skype )

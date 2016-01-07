@@ -11,12 +11,10 @@ IUSE="+ebuild +kde +php +postgres +python +web +cross-browser"
 RDEPEND="
 dev-util/kdevelop
 dev-vcs/git
-kde-base/kompare
-kde-base/umbrello
+kde-apps/kompare
+kde-apps/umbrello
 sys-devel/gdb
 
-ebuild? (
-)
 php? (
   dev-util/kdevelop-php
   dev-util/kdevelop-php-docs

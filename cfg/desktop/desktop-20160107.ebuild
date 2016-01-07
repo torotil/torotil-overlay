@@ -19,55 +19,58 @@ edu? ( cfg/kdeedu )
 games? ( cfg/games )
 devel? ( cfg/devel )
 hacking? ( cfg/hacking )
-pim? ( kde-base/kdepim-meta ) 
+pim? (
+  mail-client/thunderbird
+  www-client/chromium
+)
 
 x11-base/xorg-server
 
-kde-base/filelight
+kde-apps/filelight
 
-kde-base/kdeartwork-meta
-kde-base/kdebase-meta
-kde-base/kde-l10n
+kde-apps/kdeartwork-meta
+kde-apps/kdebase-meta
+kde-apps/kde4-l10n
 
-kde-base/kget
-kde-base/kgpg
-kde-base/kmix
+kde-apps/kget
+kde-apps/kgpg
+kde-apps/kmix
 	
-kde-base/kscd
+kde-apps/kscd
 
-kde-base/gwenview
-kde-base/kamera
-kde-base/kate
-kde-base/ksaneplugin
+kde-apps/gwenview
+kde-apps/kamera
+kde-apps/kate
+kde-apps/ksaneplugin
 kde-misc/kcm-touchpad
 kde-misc/kde-gtk-config
 
-kde-base/ark
-kde-base/kcharselect
-kde-base/kcolorchooser
-kde-base/kdenetwork-filesharing
+kde-apps/ark
+kde-apps/kcharselect
+kde-apps/kcolorchooser
+kde-apps/kdenetwork-filesharing
 kde-base/kdeplasma-addons
-kde-base/kfilereplace
-kde-base/kgamma
-kde-base/kommander
-kde-base/krdc
-kde-base/ksnapshot
-kde-base/ksystemlog
-kde-base/libkipi
-kde-base/superkaramba
-kde-base/thumbnailers
-kde-base/kruler
+kde-apps/kfilereplace
+kde-apps/kgamma
+kde-apps/kommander
+kde-apps/krdc
+kde-apps/ksnapshot
+kde-apps/ksystemlog
+kde-apps/libkipi
+kde-apps/superkaramba
+kde-apps/thumbnailers
+kde-apps/kruler
 
 x11-themes/gtk-engines
 
 dev? (
-	kde-base/klinkstatus
-	kde-base/okteta
+	kde-apps/klinkstatus
+	kde-apps/okteta
 )
 
 sci? (
-	kde-base/cantor
-	kde-base/kalzium
+	kde-apps/cantor
+	kde-apps/kalzium
 )
 
 scan? ( media-gfx/xsane )

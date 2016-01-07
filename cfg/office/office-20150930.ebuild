@@ -6,7 +6,7 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="+calligra +fonts +latex"
+IUSE="+fonts +latex"
 
 RDEPEND="
 app-office/dia
@@ -21,8 +21,6 @@ fonts? (
   media-fonts/exljbris-free
   media-fonts/urw-fonts
 )
-
-calligra? ( app-office/calligra )
 
 latex? (
   app-editors/kile

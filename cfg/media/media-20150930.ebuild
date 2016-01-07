@@ -34,7 +34,7 @@ tag? (
   media-sound/mp3diags
 )
 video? (
-  kde-base/dragon
+  kde-apps/dragon
   media-video/vlc
   media-video/mplayer
 )
