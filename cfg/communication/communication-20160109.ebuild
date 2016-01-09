@@ -9,7 +9,6 @@ KEYWORDS="amd64"
 IUSE=""
 
 RDEPEND="
-kde-base/knode
 kde-apps/krfb
 mail-client/thunderbird
 net-irc/konversation
