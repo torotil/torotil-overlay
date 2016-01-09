@@ -76,9 +76,9 @@ sci? (
 scan? ( media-gfx/xsane )
 print? ( net-print/gutenprint )
 
-kde-base/akregator
-www-client/firefox
+www-client/chromium
 flash? (
+  www-client/firefox
   www-plugins/adobe-flash
 )
 
