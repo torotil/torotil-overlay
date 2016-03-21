@@ -77,10 +77,5 @@ scan? ( media-gfx/xsane )
 print? ( net-print/gutenprint )
 
 www-client/chromium
-flash? (
-  www-client/firefox
-  www-plugins/adobe-flash
-)
-
 download? ( net-p2p/qbittorrent )
 "
