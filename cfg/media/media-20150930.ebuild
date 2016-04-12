@@ -38,5 +38,6 @@ video? (
   media-video/vlc
   media-video/mplayer
 )
+kde-apps/okular
 "
 

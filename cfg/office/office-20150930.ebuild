@@ -23,7 +23,6 @@ fonts? (
 )
 
 latex? (
-  app-editors/kile
   app-text/texlive
 )
 "

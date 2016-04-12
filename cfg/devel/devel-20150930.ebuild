@@ -36,7 +36,6 @@ python? (
   dev-python/virtualenv
 )
 postgres? (
-  dev-db/pgadmin3
   dev-db/postgresql[server]
 )
 "
