@@ -36,7 +36,7 @@ tag? (
 video? (
   kde-apps/dragon
   media-video/vlc
-  media-video/mplayer
+  media-video/mpv
 )
 kde-apps/okular
 "
