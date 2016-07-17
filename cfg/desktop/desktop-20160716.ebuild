@@ -30,7 +30,6 @@ kde-apps/filelight
 
 kde-apps/kdeartwork-meta
 kde-apps/kdebase-meta
-kde-apps/kde4-l10n
 
 kde-apps/kget
 kde-apps/kgpg
@@ -42,14 +41,12 @@ kde-apps/gwenview
 kde-apps/kamera
 kde-apps/kate
 kde-apps/ksaneplugin
-kde-misc/kcm-touchpad
 kde-misc/kde-gtk-config
 
 kde-apps/ark
 kde-apps/kcharselect
 kde-apps/kcolorchooser
 kde-apps/kdenetwork-filesharing
-kde-base/kdeplasma-addons
 kde-apps/kfilereplace
 kde-apps/kgamma
 kde-apps/kommander
@@ -57,7 +54,6 @@ kde-apps/krdc
 kde-apps/ksnapshot
 kde-apps/ksystemlog
 kde-apps/libkipi
-kde-apps/superkaramba
 kde-apps/thumbnailers
 kde-apps/kruler
 
