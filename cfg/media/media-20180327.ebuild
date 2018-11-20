@@ -6,20 +6,19 @@ HOMEPAGE=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="+abc +audio +encode +lmms +rip +tag +video -lilypond"
+IUSE="+abc +burn +encode +lmms +rip +video -lilypond"
 
 RDEPEND="
 abc? (
   media-sound/abcm2ps
   media-sound/abcmidi
-  media-sound/qpitch
   media-sound/timidity++
 )
 lilypond? (
   media-sound/lilypond
 )
-audio? (
-  media-sound/amarok
+burn? (
+  kde-apps/k3b
 )
 encode? (
   media-sound/vorbis-tools
@@ -28,10 +27,7 @@ lmms? (
   media-sound/lmms
 )
 rip? (
-  app-cdr/k3b
-)
-tag? (
-  media-sound/mp3diags
+  media-sound/abcde
 )
 video? (
   kde-apps/dragon

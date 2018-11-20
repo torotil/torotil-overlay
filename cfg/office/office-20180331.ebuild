@@ -13,7 +13,6 @@ app-office/dia
 app-office/kmymoney
 app-office/libreoffice
 app-office/scribus
-media-gfx/inkscape
 media-gfx/gimp
 sci-calculators/qalculate-gtk
 

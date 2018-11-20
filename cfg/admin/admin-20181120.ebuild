@@ -10,7 +10,6 @@ IUSE="X clamav kde"
 
 RDEPEND="
 app-admin/apg
-app-admin/localepurge
 app-admin/sudo
 clamav? ( app-antivirus/clamav )
 app-editors/vim
@@ -20,7 +19,7 @@ app-text/wgetpaste
 dev-util/ccache
 dev-util/strace
 net-analyzer/tcpdump
-net-misc/openvpn
+net-vpn/openvpn
 sys-apps/dmidecode
 sys-apps/iproute2
 sys-apps/lm_sensors

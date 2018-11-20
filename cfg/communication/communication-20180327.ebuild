@@ -10,8 +10,7 @@ IUSE=""
 
 RDEPEND="
 kde-apps/krfb
-mail-client/thunderbird
+kde-apps/kmail
 net-irc/konversation
-kde-apps/kopete
 www-client/chromium
 "

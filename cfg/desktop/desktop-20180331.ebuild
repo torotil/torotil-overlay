@@ -20,7 +20,7 @@ games? ( cfg/games )
 devel? ( cfg/devel )
 hacking? ( cfg/hacking )
 pim? (
-  mail-client/thunderbird
+  kde-apps/kmail
   www-client/chromium
 )
 
@@ -28,30 +28,22 @@ x11-base/xorg-server
 
 kde-apps/filelight
 
-kde-apps/kdeartwork-meta
-kde-apps/kdebase-meta
+kde-plasma/plasma-meta
 
 kde-apps/kget
 kde-apps/kgpg
 kde-apps/kmix
 	
-kde-apps/kscd
-
-kde-apps/gwenview
 kde-apps/kamera
 kde-apps/kate
-kde-apps/ksaneplugin
-kde-misc/kde-gtk-config
+kde-plasma/kde-gtk-config
 
 kde-apps/ark
 kde-apps/kcharselect
 kde-apps/kcolorchooser
 kde-apps/kdenetwork-filesharing
-kde-apps/kfilereplace
-kde-apps/kgamma
-kde-apps/kommander
 kde-apps/krdc
-kde-apps/ksnapshot
+kde-apps/spectacle
 kde-apps/ksystemlog
 kde-apps/libkipi
 kde-apps/thumbnailers
@@ -60,7 +52,6 @@ kde-apps/kruler
 x11-themes/gtk-engines
 
 dev? (
-	kde-apps/klinkstatus
 	kde-apps/okteta
 )
 

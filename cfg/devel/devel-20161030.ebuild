@@ -17,7 +17,6 @@ sys-devel/gdb
 
 php? (
   dev-util/kdevelop-php
-  dev-util/kdevelop-php-docs
 )
 web? (
   www-client/firefox
