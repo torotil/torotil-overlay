@@ -12,7 +12,6 @@ RDEPEND="
 dev-util/kdevelop
 dev-vcs/git
 kde-apps/kompare
-kde-apps/umbrello
 sys-devel/gdb
 
 php? (
