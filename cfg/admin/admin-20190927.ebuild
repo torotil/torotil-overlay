@@ -22,7 +22,6 @@ net-analyzer/tcpdump
 net-vpn/openvpn
 sys-apps/dmidecode
 sys-apps/iproute2
-sys-apps/lm_sensors
 sys-apps/lshw
 >sys-boot/grub-1
 sys-fs/dosfstools
