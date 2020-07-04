@@ -51,10 +51,6 @@ kde-apps/kruler
 
 x11-themes/gtk-engines
 
-dev? (
-	kde-apps/okteta
-)
-
 sci? (
 	kde-apps/cantor
 	kde-apps/kalzium
